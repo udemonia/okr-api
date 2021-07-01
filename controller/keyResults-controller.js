@@ -12,11 +12,12 @@ const KeyResults = require('../Models/KeyResults')
 exports.getKeyResults = async (req,res,next) => {
     // lets check and see if this request came in with an objective Id
     let query;
-    console.log(req.params.objectiveId)
+    console.log(req.params)
     if (req.params.objectiveId) {
-        query = KeyResults.find({objective: req.params.objectiveId})
+        console.log(`I've found the objective Id`)
+        query = await KeyResults.find({objective: req.params.objectiveId})
     } else {
-        query = KeyResults.find().populate({
+        query = await KeyResults.find().populate({
             path: 'objective',
             select: 'name description '
         })

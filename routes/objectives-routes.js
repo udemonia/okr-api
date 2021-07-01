@@ -2,7 +2,6 @@ const express = require('express')
 const advancedResults = require('../middleware/advancedResults')
 const Objectives = require('../Models/Objectives')
 
-const keyResultsRouter = require('./keyResults')
 
 const { 
     getObjectives
@@ -12,6 +11,7 @@ const {
     , deleteObjective
     } = require('../controller/objectives-controller')
 
+const keyResultsRouter = require('./keyResults')
 const router = express.Router()
 
 

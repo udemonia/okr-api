@@ -8,7 +8,7 @@ const {
     , addKeyResult
 } = require('../controller/keyResults-controller')
 
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 
 // get handles both /keyresults and /:objectiveId/keyresults
 router.route('/')
