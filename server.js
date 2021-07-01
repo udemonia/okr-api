@@ -27,9 +27,11 @@ app.use(fileUpload())
 
 // //* bring in the routers
 const objectives = require('./routes/objectives-routes')
+const keyResults = require('./routes/keyResults')
 
 // //* mount our routers
 app.use(`/api/v1/objectives`, objectives);
+app.use(`/api/v1/keyresults`, keyResults);
 // app.use(`/api/v1/courses`, courses);
 // app.use('/api/v1/auth', auth)
 
@@ -39,7 +41,7 @@ app.use(`/api/v1/objectives`, objectives);
 // app.use(handleErrors);
 
 //* port
-const port = process.env.PORT || 2001
+const port = process.env.PORT || 2002
 
 
 const server = app.listen(port, () => {

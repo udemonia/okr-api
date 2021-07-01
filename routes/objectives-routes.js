@@ -2,16 +2,21 @@ const express = require('express')
 const advancedResults = require('../middleware/advancedResults')
 const Objectives = require('../Models/Objectives')
 
+const keyResultsRouter = require('./keyResults')
+
 const { 
     getObjectives
     , postObjective
     , getSingleObjective
     , updateObjective
     , deleteObjective
-
     } = require('../controller/objectives-controller')
 
 const router = express.Router()
+
+
+// reroute /:objectiveId/keyresults to the key results router
+router.use('/:objectiveId/keyresults', keyResultsRouter)
 
 router.route('/')
     .get(advancedResults(Objectives), getObjectives)

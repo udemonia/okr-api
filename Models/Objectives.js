@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify')
 const chalk = require('chalk')
+const KeyResult = require('./KeyResults')
 
 
 const ObjectiveSchema = new mongoose.Schema({
@@ -33,6 +34,15 @@ const ObjectiveSchema = new mongoose.Schema({
       }
 )
 
+
+// cascading delete - if we delete the objective - we should delete the 
+ObjectiveSchema.pre('remove', async function(next) {
+  console.log(`courses being removed from objective: ${this._id}`)
+  await this.model('KeyResult').deleteMany({
+    objective: this._id
+  })
+})
+
 //? Lets Create a SLUG pre-save
 ObjectiveSchema.pre('save', function(next) {
     this.slug = slugify(this.name, {
@@ -40,6 +50,15 @@ ObjectiveSchema.pre('save', function(next) {
     })
     next()
   })
+
+// reverse populate on the objective schema
+// we're pulling in a virtual key Results array on the objective object
+ObjectiveSchema.virtual('keyResults', {
+  ref: 'KeyResults',
+  localField: '_id',
+  foreignField: 'objective',
+  justOne: false
+})
 
 // We are going to need virtuals
 // how the heck to we calculate percentages

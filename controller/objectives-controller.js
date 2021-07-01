@@ -2,7 +2,6 @@
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async') 
 const Objectives = require('../Models/Objectives')
-// const Courses = require('../models/Courses')
 
 exports.getObjectives = async (req,res,next) => {
     try {
@@ -87,7 +86,7 @@ exports.deleteObjective = async (req,res,next) => {
     const objectiveId = req.params.id
     console.log(req.params.id)
     try {  
-        const objective = await Objectives.findByIdAndDelete(objectiveId)
+        const objective = await Objectives.findById(objectiveId)
 
         if(!objective) {
             return res.status(404).json({
@@ -95,6 +94,7 @@ exports.deleteObjective = async (req,res,next) => {
                 error: 'Objective Not Found'
             })
         }
+        objective.remove()
 
         res.status(200).json({
             success: true,
