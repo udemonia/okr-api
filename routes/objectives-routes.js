@@ -16,6 +16,7 @@ const router = express.Router()
 
 
 // reroute /:objectiveId/keyresults to the key results router
+// todo => hide protected routes
 router.use('/:objectiveId/keyresults', keyResultsRouter)
 
 router.route('/')

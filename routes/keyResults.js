@@ -11,22 +11,12 @@ const {
 const router = express.Router({ mergeParams: true })
 
 // get handles both /keyresults and /:objectiveId/keyresults
+// todo => add put/delete routes
 router.route('/')
     .get(getKeyResults)
     .post(addKeyResult)
 
 router.route('/:keyResultId')
     .get(getKeyResult)
-
-
-// router.route('/')
-//     .get(advancedResults(Objectives), getObjectives)
-//     .post(postObjective)
-
-// router.route('/:id')
-//     .get(getSingleObjective)
-//     .put(updateObjective)
-//     .delete(deleteObjective)
-
 
 module.exports = router;
