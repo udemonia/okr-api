@@ -1,12 +1,12 @@
 [
     {
-        "name": "Brandon to do this",
-        "description": "I really need to do this one thing",
-        "atRisk": false,
+        "name": "95% CSAT Score",
+        "description": "Achieve a 95% Customer Satisfaction Score for Q3",
+        "atRisk": true,
         "objective": "60ddd4d0599562570c8896e5"
     },{
         "name": "Lottery",
-        "description": "Win the Lottery",
+        "description": "Win the Lottery - Must Be > than 1 Million Dollars",
         "atRisk": false,
         "objective": "60ddd4d0599562570c8896e5"
     }

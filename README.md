@@ -15,7 +15,7 @@ Create a simplistic OKR tracker
   - [x] Key Results CRUD routes
   - [x] Key Results virtual Objectives
 
-- [ ] Mongo Database
+- [x] Mongo Database
 - [ ] Front End?
 - [ ] Mobile?
 
