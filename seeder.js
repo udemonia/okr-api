@@ -1,3 +1,8 @@
+
+//* A Mongo Database Seeder for Objectives and Key Results
+//* The seeder will connect to the Mongo Database through via 
+//* The connection url provided in config/.env
+
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv')
@@ -19,6 +24,7 @@ if (process.argv[2] != '-import' && process.argv[2] != '-delete') {
 const objectiveData = JSON.parse(fs.readFileSync(`${__dirname}/_data/objectives.json`, 'utf-8'))
 const keyResultData = JSON.parse(fs.readFileSync(`${__dirname}/_data/keyResults.json`, 'utf-8'))
 
+//* Handle imported JSON data db insertion
 const importData = async function() {
     try {
         await Objective.create(objectiveData)
@@ -30,8 +36,7 @@ const importData = async function() {
     }
 }
 
-//* Delete All of the Data ! 😱
-
+//* Delete All of the Data in the database ! 😱
 const deleteAllData = async () => {
     try {
         // delete many without options removes all
