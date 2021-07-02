@@ -13,7 +13,7 @@ const router = express.Router({ mergeParams: true })
 // get handles both /keyresults and /:objectiveId/keyresults
 router.route('/')
     .get(getKeyResults)
-    // .post(addKeyResult)
+    .post(addKeyResult)
 
 router.route('/:keyResultId')
     .get(getKeyResult)

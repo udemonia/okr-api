@@ -65,5 +65,23 @@ exports.getKeyResult = async (req,res,next) => {
 // create a key result
 // post api/v1/objective/:objectiveId/keyResult
 exports.addKeyResult = async (req,res,next) => {
-    
+    //1. take the ob id and put it in the body for key results.objective
+    req.body.objective = req.params.objectiveId
+    //2. find the objective
+    const objective = await Objective.findById(req.params.objectiveId)
+
+    //3. handle not found
+    if (!objective) {
+        return next(new ErrorResponse(`Objective Not Found: ${req.params.objectiveId}`, 404))
+    }
+    // lets look at our req.body
+    console.log(req.body)
+
+    // create a new Key Result
+    const keyResult = await KeyResults.create(req.body)
+
+    res.status(201).json({
+        success: true,
+        data: keyResult
+    })
 }
