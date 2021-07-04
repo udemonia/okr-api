@@ -32,9 +32,11 @@ Create a simplistic OKR tracker thats cloud based
 
 ## How to Install
 
-- Clone/Fork the repro
-- npm install
-- create a .env file in config folder - see exampleEnv for environment variables
+Clone/Fork the repro here -> <https://github.com/udemonia/okr-api/blob/master/seeder.js>
+
+> npm install
+
+create a .env file in config folder - **see exampleEnv for environment variables**
 
 ## How to run local dev
 

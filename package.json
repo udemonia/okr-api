@@ -25,5 +25,8 @@
     "mongoose": "^5.12.15",
     "morgan": "^1.10.0",
     "slugify": "^1.5.3"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
   }
 }

@@ -1,6 +1,6 @@
 // const KeyResult = require('../Models/KeyResults')
 const ErrorResponse = require('../utils/errorResponse')
-const asyncHandler = require('../middleware/async') 
+// const asyncHandler = require('../middleware/async') 
 const Objective = require('../Models/Objectives')
 const KeyResults = require('../Models/KeyResults')
 
@@ -46,7 +46,7 @@ exports.getKeyResult = async (req,res,next) => {
     if (!keyResult) {
         return next(new ErrorResponse(`No Key Result with an ID of ${req.params.keyResultId}`, 404))
     }
-
+debugger
     try {
         const keyResult  = await query;
         res.status(200).json({
@@ -63,22 +63,22 @@ exports.getKeyResult = async (req,res,next) => {
 
 ///
 
-// create a key result
-// post api/v1/objective/:objectiveId/keyResult
+//* create a key result
+//* post api/v1/objective/:objectiveId/keyResult
 exports.addKeyResult = async (req,res,next) => {
-    //1. take the ob id and put it in the body for key results.objective
+    //* 1. take the ob id and put it in the body for key results.objective
     req.body.objective = req.params.objectiveId
     //2. find the objective
     const objective = await Objective.findById(req.params.objectiveId)
 
-    //3. handle not found
+    //* 3. handle not found
     if (!objective) {
         return next(new ErrorResponse(`Objective Not Found: ${req.params.objectiveId}`, 404))
     }
-    // lets look at our req.body
+    //* lets look at our req.body
     console.log(req.body)
 
-    // create a new Key Result
+    //* create a new Key Result
     const keyResult = await KeyResults.create(req.body)
 
     res.status(201).json({

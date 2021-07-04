@@ -24,7 +24,14 @@ const KeyResultSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'Objectives',
             required: true
-        }
+        },
+        tasks: [{
+          name: String,
+          completed: {
+            type: Boolean,
+            default: false
+          }
+        }]
       },
       {
         toJSON: { virtuals: true },

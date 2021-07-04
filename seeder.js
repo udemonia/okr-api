@@ -14,7 +14,8 @@ const KeyResult = require('./models/KeyResults')
 
 
 
-//! fail fast - if we get a wrong command, quite before attempting to connect to the db
+//! fail fast - if we get a wrong command, 
+//! quite before attempting to connect to the db
 if (process.argv[2] != '-import' && process.argv[2] != '-delete') {
     console.log(chalk.red.inverse(`  This file needs either an -import or -delete argument  `))
     process.exit(1)

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify')
 const chalk = require('chalk')
-const KeyResult = require('./KeyResults')
 
 
 const ObjectiveSchema = new mongoose.Schema({
