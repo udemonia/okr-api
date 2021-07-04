@@ -37,11 +37,13 @@ const UserSchema = new mongoose.Schema({
 })
 
 //* Encrypt the password using bcrypt
-//* We need to handle this on pre-save via an async function
+//* We need to handle this on pre-save via an async function so we're never actually storing passwords
 UserSchema.pre('save', async function() {
     //* in order to encrypt we need a salt
     //* the higher the rounds the more secure but also taxing on system
     const salt = await bcrypt.genSalt(10)
+
+    //* hash the password with the salt
     this.password = await bcrypt.hash(this.password, salt)
 })
 

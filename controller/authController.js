@@ -7,14 +7,7 @@ const ErrorResponse = require('../middleware/errors')
 exports.registerUser = async (req,res,next) => {
     //* de-structure req.body to grab name, email, password, role
     const { name, email, password, role } = req.body;
-
-    //! Sanity Check!
-    console.log({
-        name,
-        email,
-        password
-    })
-
+    
     //* create a User in the Mongo table - password will be handled via mongoose model
     try {
         const user = await User.create({
