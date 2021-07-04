@@ -21,9 +21,12 @@ Create a simplistic OKR tracker thats cloud based
   - [x] Mongoose Models/ORM
 
 - [ ] Protected Routes
-  - [ ] User Sign Up
+  - [x] User Sign Up
+    - [x] Bcrypt
+    - [x] JSON Web Tokens
+    - [x] Hashed Passwords Pre Save
+    - [x] Respond with Signed JSON web token
   - [ ] User Login
-  - [ ] Hashed Passwords Pre Save
   - [ ] Protected Non Public Routes For Individual OKRs/KPIs
   - [ ] User Avatar
 

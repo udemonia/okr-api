@@ -7,7 +7,7 @@ const ErrorResponse = require('../middleware/errors')
 exports.registerUser = async (req,res,next) => {
     //* de-structure req.body to grab name, email, password, role
     const { name, email, password, role } = req.body;
-    
+
     //* create a User in the Mongo table - password will be handled via mongoose model
     try {
         const user = await User.create({
@@ -16,9 +16,10 @@ exports.registerUser = async (req,res,next) => {
             password: password,
             role: role
         })
-
+        const authToken = user.produceSignedWebToken()
         res.status(200).json({
-            success: true
+            success: true,
+            token: authToken
         })
 
         if (!user) {
@@ -26,5 +27,8 @@ exports.registerUser = async (req,res,next) => {
         }
     } catch (error) {
         console.log(error)
+        return res.status(500).json({
+            success: false
+        })
     }
 }

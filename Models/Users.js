@@ -48,7 +48,9 @@ UserSchema.pre('save', async function() {
 })
 
 //* JSON Web Token - pass our random JWT + Expiration from .env
-UserSchema.methods.getSignedJWT = function() {
+//* we want to hide protected routes behind JSON web tokens
+//* we have access to the user._id because we're calling this on the user object.
+UserSchema.methods.produceSignedWebToken = function() {
     return jwt.sign({
         id: this._id
     }, process.env.JWT_SECRET, {
