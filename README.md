@@ -14,11 +14,12 @@ Create a simplistic OKR tracker thats cloud based
   - [x] Objective Search, Filter, Sort, etc
   - [x] Key Results CRUD routes
   - [x] Key Results virtual Objectives
-  - [ ] Key Results Search, Filter, Sort, etc
+  - [x] Key Results Search, Filter, Sort, etc
 
 - [x] Mongo Database
   - [x] Cloud based cluster
   - [x] Mongoose Models/ORM
+  - [x] Database Seeder
 
 - [ ] Protected Routes
   - [x] User Sign Up
@@ -26,12 +27,21 @@ Create a simplistic OKR tracker thats cloud based
     - [x] JSON Web Tokens
     - [x] Hashed Passwords Pre Save
     - [x] Respond with Signed JSON web token
-  - [ ] User Login
+  - [x] User Login
+    - [x] Compare two hashed passwords for a match
+    - [x] Invalidate requests with incorrect email or password or missing values with the same response
+    - [x] Respond with JSON Web Auth Token
+    - [x] Respond with response Cookie for front end use
   - [ ] Protected Non Public Routes For Individual OKRs/KPIs
   - [ ] User Avatar
+    - [ ] File Upload
+    - [ ] Default sets
 
-- [ ] Front End?
-- [ ] Mobile?
+- [ ] Decide Front-End Stack
+  - [ ] Possibly React + React Native
+  - [ ] Vue + Flutter
+  - [ ] Angular + Flutter?
+- [ ] Mobile
 
 ## How to Install
 

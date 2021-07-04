@@ -8,22 +8,37 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const connectDb = require('./utils/db');
 const fileUpload = require('express-fileupload');
+const handleErrors = require('./middleware/errors')
+const cookieParser = require('cookie-parser')
 
 connectDb();
 
 //?-----------------------------------------------
-//              Middleware
+//                 Middleware
 //?-----------------------------------------------
 
+//? expose the public file for user avatars
 app.use(express.static(path.join(__dirname, 'public')))
 
+//? req.json({})
 app.use(express.json())
 
+//? add cookies as a request object
+//* https://github.com/expressjs/cookie-parser#readme
+app.use(cookieParser())
+
+//? Console logging while working out of the development server
 if (process.env.NODE_ENV === 'development-env') {
     app.use(morgan('dev'))
 }
 
+//? upload images to MongoDb
 app.use(fileUpload())
+
+//?-----------------------------------------------
+//                     Routes
+//?-----------------------------------------------
+
 
 // //* bring in the routers
 const objectives = require('./routes/objectives-routes')
@@ -41,7 +56,7 @@ app.use(`/api/v1/auth`, authentication);
 
 //! Middleware ^ after the routes
 
-// app.use(handleErrors);
+app.use(handleErrors);
 
 //* port
 const port = process.env.PORT || 2002
