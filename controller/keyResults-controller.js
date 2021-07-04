@@ -36,8 +36,11 @@ exports.getKeyResults = async (req,res,next) => {
     }
 }
 
+//todo - do we have a route defined to only get an KeyResult by ID?
+
 // get a single keyResult
 exports.getKeyResult = async (req,res,next) => {
+
     const keyResult = await KeyResults.findById(req.params.keyResultId).populate({
         path: 'objective',
         select: 'name description'
@@ -66,9 +69,11 @@ debugger
 //* create a key result
 //* post api/v1/objective/:objectiveId/keyResult
 exports.addKeyResult = async (req,res,next) => {
+
     //* 1. take the ob id and put it in the body for key results.objective
     req.body.objective = req.params.objectiveId
-    //2. find the objective
+
+    //* 2. find the objective
     const objective = await Objective.findById(req.params.objectiveId)
 
     //* 3. handle not found

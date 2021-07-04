@@ -1,16 +1,36 @@
-const chalk = require('chalk')
-const errorResponse = require('../utils/errorResponse')
+const ErrorResponse = require('../utils/errorResponse');
 
-const handleErrors = (err,req,res,next) => {
-    let error = {... err}
-    error.message = error.message
-    console.log(`this is the error object ${err}`)
-    console.log(chalk.red.bold.italic(err))
-    // console.log(chalk.red.bold.italic(err.stack)) 
-    res.status(err.statusCode || 500).json({
-        success: false,
-        error: err.message
-    })
-}
+const errorHandler = (err, req, res, next) => {
+  let error = { ...err };
 
-module.exports = handleErrors;
+  error.message = err.message;
+
+  // Log to console for dev
+  console.log(err);
+
+  // Mongoose bad ObjectId
+  if (err.name === 'CastError') {
+    const message = `Resource not found`;
+    error = new ErrorResponse(message, 404);
+  }
+
+  // Mongoose duplicate key
+  if (err.code === 11000) {
+    const message = 'Duplicate field value entered';
+    error = new ErrorResponse(message, 400);
+  }
+
+  // Mongoose validation error
+  if (err.name === 'ValidationError') {
+    const message = Object.values(err.errors).map(val => val.message);
+    error = new ErrorResponse(message, 400);
+  }
+
+  res.status(error.statusCode || 500).json({
+    success: false,
+    error: error.message || 'Server Error'
+  });
+};
+
+module.exports = errorHandler;
+

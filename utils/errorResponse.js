@@ -1,10 +1,10 @@
 class ErrorResponse extends Error {
     constructor(message, statusCode) {
-        //? we extend the Errors class and make our own custom stuff :)
-        //? call the constructor of the class you're extending
-        super(message)
-        this.statusCode = statusCode
+      super(message);
+      this.statusCode = statusCode;
+  
+      Error.captureStackTrace(this, this.constructor);
     }
-}
-
-module.exports = ErrorResponse;
+  }
+  
+  module.exports = ErrorResponse;

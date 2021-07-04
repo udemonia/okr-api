@@ -58,6 +58,18 @@ UserSchema.methods.produceSignedWebToken = function() {
     })
 }
 
+//* Match the user entered password with one hashed in the database
+UserSchema.methods.validateLogInPassword = async function(userEnteredPassword) {
+
+    //* This method will be called on the instance of the user, ergo, we have access
+    //* to the hashed password within Mongo - this.password
+    try {
+        return await bcrypt.compare(userEnteredPassword, this.password)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //* Sign and respond w/ JSON web token and 
 
 //! User -> Password -> select = false - should make it so we don't show the password.

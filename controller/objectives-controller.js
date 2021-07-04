@@ -3,6 +3,8 @@ const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async') 
 const Objectives = require('../Models/Objectives')
 
+//todo - auth errors returning as html, we'll want to update this so we're responding with json
+
 exports.getObjectives = async (req,res,next) => {
     try {
         const objectives = await Objectives.find()
