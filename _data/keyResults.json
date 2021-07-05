@@ -1,21 +1,50 @@
 [
     {
-        "name": "95% CSAT Score",
+        "name": "Brandon - 95% CSAT Score",
         "description": "Achieve a 95% Customer Satisfaction Score for Q3",
         "atRisk": true,
         "objective": "60ddd3bd80473e478168f478",
-        "tasks": []
+        "user": "60e2f4d5a85e1c5ba5fc995e",
+        "tasks": [{
+            "name": "study for 5 hours",
+            "completed": true
+        }]
     },{
-        "name": "Lottery",
+        "name": "Brandon - Lottery",
         "description": "Win the Lottery - Must Be > than 1 Million Dollars",
         "atRisk": false,
         "objective": "60ddd4d0599562570c8896e5",
+        "user": "60e2f4d5a85e1c5ba5fc995e",
         "tasks": [{
             "name": "buy 500 lottery tickets",
             "completed": false
         },{
             "name": "check the lottery results each tuesday and thursday",
             "completed": false  
+        }]
+    },
+    {
+        "name": "Kal - Call of Duty Kill/Death Ratio above 1%",
+        "description": "Achieve a greater than 1% kill/death ratio in COD",
+        "atRisk": true,
+        "objective": "60ddd4d0599562570c8896e6",
+        "user": "60e2f5c002e2ca6c824cc405",
+        "tasks": [{
+            "name": "study for 5 hours",
+            "completed": true
+        }]
+    },{
+        "name": "3 Hours a Day With a Wild Imagination",
+        "description": "In the aggregate, play with toys three hours a day!",
+        "atRisk": false,
+        "objective": "60ddd3bd80473e478168f479",
+        "user": "60e2f5c002e2ca6c824cc405",
+        "tasks": [{
+            "name": "week one - 3 hours/day average",
+            "completed": false
+        },{
+            "name": "week two - 3 hours a day average",
+            "completed": true  
         }]
     }
 ]

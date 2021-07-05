@@ -25,6 +25,11 @@ const KeyResultSchema = new mongoose.Schema({
             ref: 'Objectives',
             required: true
         },
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+          required: false
+        },
         tasks: [{
           name: String,
           completed: {

@@ -2,10 +2,15 @@
 const ErrorResponse = require('../utils/errorResponse')
 const asyncHandler = require('../middleware/async') 
 const Objectives = require('../Models/Objectives')
+const chalk = require('chalk')
 
 //todo - auth errors returning as html, we'll want to update this so we're responding with json
 
 exports.getObjectives = async (req,res,next) => {
+    
+    //* pull out the user Id as set by the Bearer Auth middleware
+    const userId = req.user.id
+
     try {
         const objectives = await Objectives.find()
         res.status(200).json(res.advancedResults)
@@ -17,6 +22,10 @@ exports.getObjectives = async (req,res,next) => {
 }
 
 exports.postObjective = async (req,res,next) => {
+
+    //* add the user objectives on post creation request
+    req.body.user = req.user.id
+    console.log(req.body)
     try {
         const objective = await Objectives.create(req.body)
         res.status(201).json({
@@ -56,14 +65,15 @@ exports.getSingleObjective = async (req,res,next) => {
 }
 
 exports.updateObjective = async (req,res,next) => {
+    debugger
     const objectiveId = req.params.id
-    console.log(req.params.id)
+    const userId = req.user.id;
+    console.log(`working on put request`)
+    console.log(chalk.magenta.inverse(userId))
+    try {
 
-    try {  
-        const objective = await Objectives.findByIdAndUpdate(objectiveId, req.body, {
-            new: true,
-            validators: true
-        })
+        let objective = await Objectives.findByIdAndUpdate(objectiveId)
+        console.log(objective)
 
         if(!objective) {
             return res.status(404).json({
@@ -72,6 +82,17 @@ exports.updateObjective = async (req,res,next) => {
             })
         }
 
+        //* compare the mongo object Id string to the logged in user's id
+        //* if they don't match, error out
+        if (objective.user._id.toString() != userId) {
+            return next( new ErrorResponse('Unauthorized Request', 401))
+        }
+
+        objective = await Objectives.findByIdAndUpdate(objectiveId, req.body, {
+            new: true,
+            validators: true
+        })
+
         res.status(200).json({
             success: true,
             data: objective
@@ -79,7 +100,8 @@ exports.updateObjective = async (req,res,next) => {
 
     } catch (err) {
         res.status(400).json({
-            success: false
+            success: false,
+            error: err
         })
     }
 }

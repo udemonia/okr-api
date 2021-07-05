@@ -8,7 +8,13 @@ exports.loginRequiredRoutes = async (req,res,next) => {
     //* Lets check for bearer tokens first -> this in the 'Bearer {{token}}' format
     //* we want to pull this out of the request header!
     let bearerAccessToken;
+
     const requestAuthHeader = req.headers.authorization
+
+    //* fail fast -> no auth headers should return a failed call right away
+    if (!requestAuthHeader) {
+        return next(new ErrorResponse('Not Authorized', 404))
+    }
 
     //* lets check to see if the Authorization header value starts with Bearer
     const includesBearer = requestAuthHeader.startsWith('Bearer')

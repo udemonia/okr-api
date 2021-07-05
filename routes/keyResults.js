@@ -16,11 +16,12 @@ const router = express.Router({ mergeParams: true })
 
 // get handles both /keyresults and /:objectiveId/keyresults
 // todo => add put/delete routes
+// todo => advanced Routes appear to not be working??
 router.route('/')
-    .get(getKeyResults)
-    .post(addKeyResult)
+    .get(advancedResults(KeyResults), loginRequiredRoutes, getKeyResults)
+    .post(loginRequiredRoutes, addKeyResult)
 
 router.route('/:keyResultId')
-    .get(getKeyResult)
+    .get(loginRequiredRoutes, getKeyResult)
 
 module.exports = router;
