@@ -7,12 +7,11 @@ const chalk = require('chalk')
 //todo - auth errors returning as html, we'll want to update this so we're responding with json
 
 exports.getObjectives = async (req,res,next) => {
-    
+    debugger
     //* pull out the user Id as set by the Bearer Auth middleware
     const userId = req.user.id
 
     try {
-        const objectives = await Objectives.find()
         res.status(200).json(res.advancedResults)
     } catch (error) {
         res.status(400).json({
@@ -104,7 +103,7 @@ exports.updateObjective = async (req,res,next) => {
 }
 
 exports.deleteObjective = async (req,res,next) => {
-debugger
+
     const userId = req.user.id;
     const objectiveId = req.params.id
 

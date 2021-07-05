@@ -22,7 +22,7 @@ const router = express.Router()
 router.use('/:objectiveId/keyresults', keyResultsRouter)
 
 router.route('/')
-    .get(advancedResults(Objectives), loginRequiredRoutes, getObjectives)
+    .get(loginRequiredRoutes, advancedResults(Objectives), getObjectives)
     .post(loginRequiredRoutes, postObjective)
 
 router.route('/:id')

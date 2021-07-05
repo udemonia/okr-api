@@ -1,10 +1,12 @@
 const advancedResults = (model, populate) => async (req, res, next) => {
+    debugger
+    const userId = req.user.id
     let query;
-  
-    // Copy req.query
+
+    //* Copy req.query
     const reqQuery = { ...req.query };
   
-    // Fields to exclude
+    //* Fields to exclude
     const removeFields = ['select', 'sort', 'page', 'limit'];
   
     // Loop over removeFields and delete them from reqQuery
@@ -18,6 +20,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
   
     // Finding resource
     query = model.find(JSON.parse(queryStr));
+
   
     // Select Fields
     if (req.query.select) {
@@ -47,7 +50,7 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     }
   
     // Executing query
-    const results = await query;
+    const results = await query.where({user: userId});
   
     // Pagination result
     const pagination = {};
