@@ -7,10 +7,6 @@ const chalk = require('chalk')
 //todo - auth errors returning as html, we'll want to update this so we're responding with json
 
 exports.getObjectives = async (req,res,next) => {
-    debugger
-    //* pull out the user Id as set by the Bearer Auth middleware
-    const userId = req.user.id
-
     try {
         res.status(200).json(res.advancedResults)
     } catch (error) {
@@ -39,7 +35,8 @@ exports.postObjective = async (req,res,next) => {
 }
 
 exports.getSingleObjective = async (req,res,next) => {
-    const objectiveId = req.params.id
+    const objectiveId = req.params.id;
+    const userId = req.user.id;
 
     try {  
         const objective = await Objectives.findById(objectiveId)
@@ -49,6 +46,11 @@ exports.getSingleObjective = async (req,res,next) => {
                 success: false,
                 error: 'Objective Not Found'
             })
+        }
+
+        //* check to ensure the user Id in the returned collection matches the logged in users
+        if (objective.user._id.toString() != userId) {
+            return next( new ErrorResponse('Unauthorized Request', 401))
         }
 
         res.status(200).json({

@@ -1,5 +1,4 @@
 const advancedResults = (model, populate) => async (req, res, next) => {
-    debugger
     const userId = req.user.id
     let query;
 
