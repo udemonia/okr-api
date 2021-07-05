@@ -3,6 +3,9 @@ const advancedResults = require('../middleware/advancedResults')
 const KeyResults = require('../Models/KeyResults')
 const Objectives = require('../Models/Objectives')
 
+//? bring in the User Authentication middleware and hide our routes behind them
+const { loginRequiredRoutes } = require('../middleware/bearerAuth')
+
 const { 
     getKeyResults
     , getKeyResult

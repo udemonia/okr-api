@@ -8,6 +8,11 @@ Create a simplistic OKR tracker thats cloud based
 
 ## Requirements
 
+-[ ] MongoDB
+  -[x] Objectives Schema & Model
+  -[x] Key Results Schema & Model
+  -[x] User Schema & Model
+
 - [ ] Node Express API
   - [x] Objective CRUD routes
   - [ ] Objective virtual Key Results
@@ -32,10 +37,15 @@ Create a simplistic OKR tracker thats cloud based
     - [x] Invalidate requests with incorrect email or password or missing values with the same response
     - [x] Respond with JSON Web Auth Token
     - [x] Respond with response Cookie for front end use
-  - [ ] Protected Non Public Routes For Individual OKRs/KPIs
+  - [x] Protected Non Public Routes For Individual OKRs/KPIs
+    - [x] JSON Web Token parsed and checked for validation
+    - [x] User associated with the parsed token
+    - [x] Protect Objectives
+    - [x] Protect Key Results
+    - [ ] Get current logged in user
   - [ ] User Avatar
     - [ ] File Upload
-    - [ ] Default sets
+    - [ ] Default sets to select...
 
 - [ ] Decide Front-End Stack
   - [ ] Possibly React + React Native

@@ -1,6 +1,8 @@
 const User = require('../Models/Users');
 const ErrorResponse = require('../utils/errorResponse')
 
+//todo noticing a cookie token even if we pass incorrect values....
+
 //* POST 
 //* Route => POST/api/v1/authentication/registration
 //* Public Access
@@ -18,11 +20,8 @@ exports.registerUser = async (req,res,next) => {
             password: password,
             role: role
         })
-        const authToken = user.produceSignedWebToken()
-        res.status(200).json({
-            success: true,
-            token: authToken
-        })
+        //* Cookies that have been signed
+        tokenResponseWithCookie(user, 200, res)
 
         if (!user) {
             next(new ErrorResponse('User Insert Failed', 500))
@@ -36,7 +35,6 @@ exports.registerUser = async (req,res,next) => {
 }
 
 exports.logUserIn = async (req,res,next) => {
-    debugger
 
     //* 1. get email + password from req.body
     const {email, password} = req.body
@@ -68,7 +66,7 @@ exports.logUserIn = async (req,res,next) => {
             new ErrorResponse(`Invalid Login`, 401)
             )  //! same Error as no user !
     }
-    debugger
+
     //* Cookies that have been signed
     tokenResponseWithCookie(user, 200, res)
 
@@ -86,17 +84,40 @@ const tokenResponseWithCookie = (user, statusCode, res) => {
         expires: new Date(Date.now() + process.env.JWT_COOKIE * 24 * 60 * 60 * 1000),
         httpOnly: true
     }
+    
+    //* cookie's secure option as true only if we're in production
+    if (process.env.NODE_ENV === 'production') {
+        cookieOptions.secure = true
+    }
+
     console.log(cookieOptions)
 
     //* res.cookie takes in three arguments
     //* 1. the key 'token'
     //* 2. the JSON Web Token - authToken => user.produceSignedWebToken()
     //* 3. an Options object - expires and httpOnly in our case
-
-    
-    // console.log(res.cookie)
     res.status(statusCode).cookie('token', authToken, cookieOptions).json({
             success: true,
             token: authToken
         })
+}
+
+exports.getCurrentLoggedInUser = async (req,res,next) => {
+    
+    //* we're getting and setting the current logged in User
+    //* via the Bearer Authentication loginRequiredRoutes middleware 
+    //* upon validating the user, we're adding the object to the 
+    //* req -> req.user
+    const userId = req.user.id;
+    
+    console.log(`UserId: ${userId}`)
+
+    const user = await User.findById(userId)
+
+    console.log(JSON.stringify(user, null, 2))
+
+    res.status(200).json({
+        success: true,
+        data: user
+    })
 }

@@ -1,8 +1,7 @@
-// const KeyResult = require('../Models/KeyResults')
-const ErrorResponse = require('../utils/errorResponse')
+const ErrorResponse = require('../utils/errorResponse');
 // const asyncHandler = require('../middleware/async') 
-const Objective = require('../Models/Objectives')
-const KeyResults = require('../Models/KeyResults')
+const Objective = require('../Models/Objectives');
+const KeyResults = require('../Models/KeyResults');
 
 // GET all Key Results
 // GET api/v1/keyResults
@@ -37,7 +36,6 @@ exports.getKeyResults = async (req,res,next) => {
 }
 
 //todo - do we have a route defined to only get an KeyResult by ID?
-
 // get a single keyResult
 exports.getKeyResult = async (req,res,next) => {
 

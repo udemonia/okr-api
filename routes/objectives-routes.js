@@ -2,6 +2,8 @@ const express = require('express')
 const advancedResults = require('../middleware/advancedResults')
 const Objectives = require('../Models/Objectives')
 
+//? bring in the User Authentication middleware and hide our routes behind them
+const { loginRequiredRoutes } = require('../middleware/bearerAuth')
 
 const { 
     getObjectives
@@ -20,13 +22,13 @@ const router = express.Router()
 router.use('/:objectiveId/keyresults', keyResultsRouter)
 
 router.route('/')
-    .get(advancedResults(Objectives), getObjectives)
-    .post(postObjective)
+    .get(advancedResults(Objectives), loginRequiredRoutes, getObjectives)
+    .post(loginRequiredRoutes, postObjective)
 
 router.route('/:id')
-    .get(getSingleObjective)
-    .put(updateObjective)
-    .delete(deleteObjective)
+    .get(loginRequiredRoutes, getSingleObjective)
+    .put(loginRequiredRoutes, updateObjective)
+    .delete(loginRequiredRoutes, deleteObjective)
 
 
 module.exports = router;
