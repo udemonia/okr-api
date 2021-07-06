@@ -30,6 +30,10 @@ const KeyResultSchema = new mongoose.Schema({
           ref: 'User',
           required: false
         },
+        progress: {
+          type: Number,
+          default: 0
+        },
         tasks: [{
           name: String,
           completed: {

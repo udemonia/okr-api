@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
         minlength: 7,
         select: false
     },
+    avatar: {
+        type: String,
+        default: 'no-photo.jpg'
+    },
     resetPasswordToken: {
         type: String
     },

@@ -1,5 +1,7 @@
 const User = require('../Models/Users');
 const ErrorResponse = require('../utils/errorResponse')
+const fileUpload = require('express-fileupload')
+const path = require('path') // for the file extension on image upload
 
 //todo noticing a cookie token even if we pass incorrect values....
 
@@ -148,3 +150,5 @@ exports.logout = async (req,res,next) => {
         data: {}
     })
 }
+
+// todo add avatar upload

@@ -9,7 +9,15 @@ const bodyParser = require('body-parser');
 const connectDb = require('./utils/db');
 const fileUpload = require('express-fileupload');
 const handleErrors = require('./middleware/errors')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+//! Security packages
+const sanitize = require('express-mongo-sanitize'); // prevent operator injection attacks
+const helmet = require('helmet'); // set security headers
+const xssClean = require('xss-clean'); // prevent script injection
+const expressRateLimit = require('express-rate-limit'); // prevent DOS and DDOS attacks by limiting the number of requests made
+const hpp = require('hpp'); // prevents http param pollution attacks
+const cors = require('cors'); // allow other origins to reach out API
+//! Security packages
 
 connectDb();
 
@@ -32,8 +40,36 @@ if (process.env.NODE_ENV === 'development-env') {
     app.use(morgan('dev'))
 }
 
+//! Security packages - - - - - - - - - - - - - - -
+//* prevent NoSQL injection attacks with operators
+app.use(sanitize());
+
+//* Add headers to prevent well known attacks
+app.use(helmet())
+
+//* Prevent Cross-Scripting Attacks by appending data to <script> </script> tags
+app.use(xssClean())
+
+//* Rate Limiting to prevent DOS and DDOS attacks
+const limiter = expressRateLimit({
+    windowMs: 10 * 60 * 1000, //ten minutes
+    max: 200
+})
+app.use(limiter)
+
+//* prevent param pollution
+app.use(hpp());
+
+//* allow cross origin requests - we want our front end to access this api
+app.use(cors());
+
+//! Security packages - - - - - - - - - - - - - - -
+
+//* File Upload
 //? upload images to MongoDb
 app.use(fileUpload())
+
+
 
 //?-----------------------------------------------
 //                     Routes

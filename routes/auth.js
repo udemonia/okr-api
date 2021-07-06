@@ -8,8 +8,13 @@ const {
     , logUserIn
     , getCurrentLoggedInUser
     , logout
+    , uploadAvatarPhoto
+    , uploadPhoto
 } = require('../controller/authController')
 
+//* route for adding Avatar Photos to the logged in user's user object
+// todo add a route for file upload
+// router.route('/me/avatar').put(loginRequiredRoutes, uploadPhoto)
 
 router.route('/registration')
     .post(registerUser)
@@ -17,15 +22,12 @@ router.route('/registration')
 router.route('/login')
     .post(logUserIn)
 
-router.route('/currentUser')
-    .get(loginRequiredRoutes, getCurrentLoggedInUser)
-
 router.route('/logout')
     .get(loginRequiredRoutes, logout)
 
 // //* pass the loginRequiredRoutes middleware to validate the user is logged in
-// router.route('/CurrentLoggedUser')
-//     .get(loginRequiredRoutes, getCurrentLoggedInUser)
+router.route('/CurrentLoggedUser')
+    .get(loginRequiredRoutes, getCurrentLoggedInUser)
 
 
 module.exports = router;
