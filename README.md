@@ -8,11 +8,6 @@ Create a simplistic OKR tracker thats cloud based
 
 ## Requirements
 
--[ ] MongoDB
-  -[x] Objectives Schema & Model
-  -[x] Key Results Schema & Model
-  -[x] User Schema & Model
-
 - [ ] Node Express API
   - [x] Objective CRUD routes
   - [ ] Objective virtual Key Results
