@@ -8,16 +8,10 @@ const chalk = require('chalk')
 
 exports.getKeyResults = async (req,res,next) => {
 
-    // const objectiveId = req.params.objectiveId;
-    // debugger
-    // const userId = req.user.id // mongo object
-    // if (objectiveId){
-    //     const keyResult = await KeyResults.find({
-    //         objective: objectiveId
-    //     }).where({user: userId})
-    //     .populate('objective')
-    // }
- 
+    //* only this Key Result request comes through the advanced routing middleware
+    //* we have to handle sorting, searching, filtering, etc.
+    //* while also handling requests that come with an objective Id (get all key results for this objective)
+    //* & get all objectives with url parameters attached;
     try {
         res.status(200).json(res.advancedResults)
     } catch (error) {
@@ -99,17 +93,23 @@ exports.addKeyResult = async (req,res,next) => {
 
 //! Returning a 500 -> hitting the catch for some reason, start here!
 exports.updateKeyResult = async (req,res,next) => {
+    
+    //* grab the keyResult and User Id from the request
     const getKeyResultId = req.params.keyResultId; 
     const userId = req.user.id;
 
     try {
-        let keyResult = await KeyResults.findByIdAndUpdate(getKeyResultId)
+        //* lets find the key result in question:
+        let keyResult = await KeyResults.findById(getKeyResultId)
+
+        //* handle not found:
         if (!keyResult) {
             return res.status(404).json({
                 success: false,
                 error: `Key Result Not Found with an Id of ${getKeyResultId}`
             })
         }
+
         //* compare the mongo object Id string to the logged in user's id
         //* if they don't match, error out
         if (keyResult.user._id.toString() != userId) {
@@ -127,13 +127,41 @@ exports.updateKeyResult = async (req,res,next) => {
             success: true,
             data: keyResult
         })
-
-        
     } catch (error) {
         next( new ErrorResponse('Failed To Update', 500))
     }
 }
 
-exports.deleteKeyResult = (req,res,next) => {
+exports.deleteKeyResult = async (req,res,next) => {
+        //* grab the keyResult and User Id from the request
+        const getKeyResultId = req.params.keyResultId; 
+        const userId = req.user.id;
 
+        try {
+            //* find the key Result in question:
+            let keyResult = await KeyResults.findById(getKeyResultId)
+
+            //* handle unauthorized requests:
+            //* compare the mongo object Id string to the logged in user's id
+            //* if they don't match, error out
+            if (keyResult.user._id.toString() != userId) {
+                return next( new ErrorResponse('Unauthorized Request', 401))
+            }
+
+            //* handle not found:
+            if (!keyResult) {
+                return next(new ErrorResponse(`Key Result ${getKeyResultId} not found`, 404))
+            }
+
+            //* At this point, we ought to be authorized to make the request and we ought to have a request to remove
+            keyResult.remove()
+
+            res.status(200).json({
+                success: true,
+                data: {}
+            })
+
+        } catch (error) {
+            next(new ErrorResponse('Failed to Delete', 500))
+        }
 }

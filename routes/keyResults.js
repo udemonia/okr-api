@@ -11,6 +11,7 @@ const {
     , getKeyResult
     , addKeyResult
     , updateKeyResult
+    , deleteKeyResult
 } = require('../controller/keyResults-controller')
 
 const router = express.Router({ mergeParams: true })
@@ -26,5 +27,6 @@ router.route('/')
 router.route('/:keyResultId')
     .get(loginRequiredRoutes, getKeyResult)
     .put(loginRequiredRoutes, updateKeyResult)
+    .delete(loginRequiredRoutes, deleteKeyResult)
 
 module.exports = router;
