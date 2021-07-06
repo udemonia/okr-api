@@ -2,9 +2,6 @@ const express = require('express')
 const advancedResults = require('../middleware/advancedResults')
 const Objectives = require('../Models/Objectives')
 
-//? bring in the User Authentication middleware and hide our routes behind them
-const { loginRequiredRoutes } = require('../middleware/bearerAuth')
-
 const { 
     getObjectives
     , postObjective
@@ -16,9 +13,10 @@ const {
 const keyResultsRouter = require('./keyResults')
 const router = express.Router()
 
+//? bring in the User Authentication middleware and hide our routes behind them
+const { loginRequiredRoutes } = require('../middleware/bearerAuth')
 
-// reroute /:objectiveId/keyresults to the key results router
-// todo => hide protected routes
+//? reroute /:objectiveId/keyresults to the key results router
 router.use('/:objectiveId/keyresults', keyResultsRouter)
 
 router.route('/')

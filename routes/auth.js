@@ -7,6 +7,7 @@ const {
     registerUser 
     , logUserIn
     , getCurrentLoggedInUser
+    , logout
 } = require('../controller/authController')
 
 
@@ -15,6 +16,12 @@ router.route('/registration')
 
 router.route('/login')
     .post(logUserIn)
+
+router.route('/currentUser')
+    .get(loginRequiredRoutes, getCurrentLoggedInUser)
+
+router.route('/logout')
+    .get(loginRequiredRoutes, logout)
 
 // //* pass the loginRequiredRoutes middleware to validate the user is logged in
 // router.route('/CurrentLoggedUser')

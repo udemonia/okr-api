@@ -102,22 +102,49 @@ const tokenResponseWithCookie = (user, statusCode, res) => {
         })
 }
 
-// exports.getCurrentLoggedInUser = async (req,res,next) => {
+exports.getCurrentLoggedInUser = async (req,res,next) => {
     
-//     //* we're getting and setting the current logged in User
-//     //* via the Bearer Authentication loginRequiredRoutes middleware 
-//     //* upon validating the user, we're adding the object to the 
-//     //* req -> req.user
-//     const userId = req.user.id;
+    //* we're getting and setting the current logged in User
+    //* via the Bearer Authentication loginRequiredRoutes middleware 
+    //* upon validating the user, we're adding the object to the 
+    //* req -> req.user
+
+    try {
+        const userId = req.user.id;
+
+        console.log(userId);
+
+        if (!userId) {
+            next(new ErrorResponse('Auth Headers Are not Set', 401))
+        }
+
+        //* if we have auth headers, we should be able to pull back the user info
+        const user = await User.findById(userId)
+        
+        console.log(JSON.stringify(user, null, 2))
     
-//     console.log(`UserId: ${userId}`)
+        res.status(200).json({
+            success: true,
+            data: user
+        })
+        
+    } catch (error) {
+        next(new ErrorResponse('Get User Failed', 500))
+    }
 
-//     const user = await User.findById(userId)
+}
 
-//     console.log(JSON.stringify(user, null, 2))
+exports.logout = async (req,res,next) => {
+    //* we want to clear the cookies/token
+    res.cookie('token', 'none', {
+        expires: new Date(Date.now + 5 * 1000),
+        httpOnly: true
+    })
 
-//     res.status(200).json({
-//         success: true,
-//         data: user
-//     })
-// }
+
+    //* Respond with an empty object
+    res.status(200).json({
+        success: true,
+        data: {}
+    })
+}
