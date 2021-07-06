@@ -2,6 +2,7 @@ const ErrorResponse = require('../utils/errorResponse');
 // const asyncHandler = require('../middleware/async') 
 const Objective = require('../Models/Objectives');
 const KeyResults = require('../Models/KeyResults');
+const chalk = require('chalk')
 
 //todo - do we have a route defined to only get an KeyResult by ID?
 
@@ -26,32 +27,62 @@ exports.getKeyResults = async (req,res,next) => {
 
 // get a single keyResult
 exports.getKeyResult = async (req,res,next) => {
-    console.log(`Reg Params Key Result Id ${req.params.keyResultId}`)
-    console.log(`User Id ${req.user.id}`)
 
-    const keyResult = await KeyResults.findById(req.params.keyResultId).populate({
-        path: 'objective',
-        select: 'name description'
-    })
+    //! Trying something there....
+    console.log(chalk.red(JSON.stringify(req.params, null, 2)))
+    const keyResultId = req.params.keyResultId;
+    console.log(`Key Result: ${keyResultId}`)
+    const userId = req.user.id;
 
-    if (!keyResult) {
-        return next(new ErrorResponse(`No Key Result with an ID of ${req.params.keyResultId}`, 404))
-    }
-    try {
-        const keyResult  = await query;
+    try {  
+        const getKeyResult = await KeyResults.findById(keyResultId)
+
+        if(!getKeyResult) {
+            return res.status(404).json({
+                success: false,
+                error: 'Key Result Not Found'
+            })
+        }
+
+        //* check to ensure the user Id in the returned collection matches the logged in users
+        if (getKeyResult.user._id.toString() != userId) {
+            return next( new ErrorResponse('Unauthorized Request', 401))
+        }
+
         res.status(200).json({
             success: true,
-            count: keyResult.length,
-            data: keyResult
+            data: getKeyResult
         })
-    } catch (error) {
+    } catch (err) {
         res.status(400).json({
             success: false
         })
     }
+    // const KeyResultId = req.params.keyResultId
+
+    // try {
+    //     const keyResult = await KeyResults.findById(KeyResultId).populate({
+    //         path: 'objective',
+    //         select: 'name description'
+    //     })
+    
+    //     if (!keyResult) {
+    //         return next(new ErrorResponse(`No Key Result with an ID of ${req.params.keyResultId}`, 404))
+    //     }
+
+    //     res.status(200).json({
+    //         success: true,
+    //         count: keyResult.length,
+    //         data: keyResult
+    //     })
+    // } catch (error) {
+    //     res.status(400).json({
+    //         success: false
+    //     })
+    // }
 }
 
-///
+///!
 
 //* create a key result
 //* post api/v1/objective/:objectiveId/keyResult
