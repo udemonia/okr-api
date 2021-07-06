@@ -22,38 +22,12 @@ exports.getKeyResults = async (req,res,next) => {
             success: false
         })
     }
-
-    // const userId = req.user.id;
-    // // lets check and see if this request came in with an objective Id
-    // let query;
-    // console.log(req.params)
-    // if (req.params.objectiveId) {
-    //     console.log(`I've found the objective Id`)
-    //     query = await KeyResults.find({objective: req.params.objectiveId})
-    // } else {
-    //     query = await KeyResults.find().populate({
-    //         path: 'objective',
-    //         select: 'name description '
-    //     })
-    // }
-    // try {
-    //     //* query our object for only results where our logged in users id is in the collection db
-    //     const keyResult  = await query;
-
-    //     res.status(200).json({
-    //         success: true,
-    //         count: keyResult.length,
-    //         data: keyResult
-    //     })
-    // } catch (error) {
-    //     res.status(400).json({
-    //         success: false
-    //     })
-    // }
 }
 
 // get a single keyResult
 exports.getKeyResult = async (req,res,next) => {
+    console.log(`Reg Params Key Result Id ${req.params.keyResultId}`)
+    console.log(`User Id ${req.user.id}`)
 
     const keyResult = await KeyResults.findById(req.params.keyResultId).populate({
         path: 'objective',
@@ -63,7 +37,6 @@ exports.getKeyResult = async (req,res,next) => {
     if (!keyResult) {
         return next(new ErrorResponse(`No Key Result with an ID of ${req.params.keyResultId}`, 404))
     }
-debugger
     try {
         const keyResult  = await query;
         res.status(200).json({
