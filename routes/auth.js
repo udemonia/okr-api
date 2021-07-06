@@ -16,9 +16,9 @@ router.route('/registration')
 router.route('/login')
     .post(logUserIn)
 
-//* pass the loginRequiredRoutes middleware to validate the user is logged in
-router.route('/CurrentLoggedUser')
-    .get(loginRequiredRoutes, getCurrentLoggedInUser)
+// //* pass the loginRequiredRoutes middleware to validate the user is logged in
+// router.route('/CurrentLoggedUser')
+//     .get(loginRequiredRoutes, getCurrentLoggedInUser)
 
 
 module.exports = router;

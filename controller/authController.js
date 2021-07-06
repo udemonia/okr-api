@@ -102,22 +102,22 @@ const tokenResponseWithCookie = (user, statusCode, res) => {
         })
 }
 
-exports.getCurrentLoggedInUser = async (req,res,next) => {
+// exports.getCurrentLoggedInUser = async (req,res,next) => {
     
-    //* we're getting and setting the current logged in User
-    //* via the Bearer Authentication loginRequiredRoutes middleware 
-    //* upon validating the user, we're adding the object to the 
-    //* req -> req.user
-    const userId = req.user.id;
+//     //* we're getting and setting the current logged in User
+//     //* via the Bearer Authentication loginRequiredRoutes middleware 
+//     //* upon validating the user, we're adding the object to the 
+//     //* req -> req.user
+//     const userId = req.user.id;
     
-    console.log(`UserId: ${userId}`)
+//     console.log(`UserId: ${userId}`)
 
-    const user = await User.findById(userId)
+//     const user = await User.findById(userId)
 
-    console.log(JSON.stringify(user, null, 2))
+//     console.log(JSON.stringify(user, null, 2))
 
-    res.status(200).json({
-        success: true,
-        data: user
-    })
-}
+//     res.status(200).json({
+//         success: true,
+//         data: user
+//     })
+// }

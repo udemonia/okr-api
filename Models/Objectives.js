@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const slugify = require('slugify')
 const chalk = require('chalk')
 
+// todo - add virtual key results, name and is completed
+
 
 const ObjectiveSchema = new mongoose.Schema({
         name: {

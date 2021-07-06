@@ -47,6 +47,7 @@ exports.loginRequiredRoutes = async (req,res,next) => {
 
         //* pull out the User.id and search for it in Mongo
         //* we'll store the User in the request object
+        debugger
         req.user = await User.findById(decodedJSONWebToken.id)
         next()
     } catch (error) {

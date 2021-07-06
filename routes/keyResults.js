@@ -18,7 +18,10 @@ const router = express.Router({ mergeParams: true })
 // todo => add put/delete routes
 // todo => advanced Routes appear to not be working??
 router.route('/')
-    .get(advancedResults(KeyResults), loginRequiredRoutes, getKeyResults)
+    .get(loginRequiredRoutes, advancedResults(KeyResults, {
+        path: 'objective',
+        select: 'name description '
+    }), getKeyResults)
     .post(loginRequiredRoutes, addKeyResult)
 
 router.route('/:keyResultId')
