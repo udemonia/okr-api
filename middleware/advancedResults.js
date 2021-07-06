@@ -1,5 +1,7 @@
 const advancedResults = (model, populate) => async (req, res, next) => {
     const userId = req.user.id
+    const objectiveId = req.params.objectiveId
+    console.log(`Here *** is your objective ID ${objectiveId}`)
     let query;
 
     //* Copy req.query
@@ -49,7 +51,11 @@ const advancedResults = (model, populate) => async (req, res, next) => {
     }
   
     // Executing query
-    const results = await query.where({user: userId});
+    let results = await query.where({user: userId});
+
+    if (objectiveId) {
+      results = results.filter(result => result.objective.id === objectiveId)
+    }
   
     // Pagination result
     const pagination = {};

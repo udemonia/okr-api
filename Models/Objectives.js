@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const slugify = require('slugify')
 const chalk = require('chalk')
 
-// todo - add virtual key results, name and is completed
-
 
 const ObjectiveSchema = new mongoose.Schema({
         name: {
@@ -54,12 +52,12 @@ ObjectiveSchema.pre('save', function(next) {
 
 // reverse populate on the objective schema
 // we're pulling in a virtual key Results array on the objective object
-ObjectiveSchema.virtual('keyResults', {
-  ref: 'KeyResults',
-  localField: '_id',
-  foreignField: 'objective',
-  justOne: false
-})
+// ObjectiveSchema.virtual('keyResults', {
+//   ref: 'KeyResults',
+//   localField: '_id',
+//   foreignField: 'objective',
+//   justOne: false
+// })
 
 // We are going to need virtuals
 // how the heck to we calculate percentages

@@ -17,7 +17,7 @@ exports.getObjectives = async (req,res,next) => {
 }
 
 exports.postObjective = async (req,res,next) => {
-
+debugger
     //* add the user objectives on post creation request
     req.body.user = req.user.id
 

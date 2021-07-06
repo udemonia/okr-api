@@ -34,7 +34,7 @@ exports.loginRequiredRoutes = async (req,res,next) => {
         return next(new ErrorResponse('Not Authorized', 404))
     }
 
-
+    
     try {
         //* Now we need to validate the token:
         //? jwt.verify takes three arguments
@@ -47,7 +47,6 @@ exports.loginRequiredRoutes = async (req,res,next) => {
 
         //* pull out the User.id and search for it in Mongo
         //* we'll store the User in the request object
-        debugger
         req.user = await User.findById(decodedJSONWebToken.id)
         next()
     } catch (error) {

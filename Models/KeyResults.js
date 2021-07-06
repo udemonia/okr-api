@@ -54,4 +54,11 @@ KeyResultSchema.pre('save', function(next) {
 // We are going to need virtuals
 // how the heck to we calculate percentages
 
+KeyResultSchema.virtual('keyResults', {
+  ref: 'objective',
+  localField: '_id',
+  foreignField: 'KeyResult',
+  justOne: false
+})
+
 module.exports = mongoose.model('KeyResult', KeyResultSchema);
