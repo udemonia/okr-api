@@ -104,11 +104,11 @@ KeyResultSchema.pre('save', function(next) {
 // })
 
 
+// todo how to handle no key results
+
+
 // lets create a static method on the Mongoose Course Schema to calculate average cost
 KeyResultSchema.statics.getAverageProgress = async function(objectiveId) {
-
-  //? Create an object with Objective ID and Avg Progress of each Key Result to insert into Objective
-  //* Match all Key Results on Objective ID and Group on Obj ID and Avg. Progress
   const obj = await this.aggregate([
       {
           $match: { objective: objectiveId }
@@ -120,33 +120,24 @@ KeyResultSchema.statics.getAverageProgress = async function(objectiveId) {
           }
       }
   ])
-  console.log(obj) //
-
-  //* Save the Obj Into the Objective Database
-
   try {
       await this.model('Objectives').findByIdAndUpdate(objectiveId, {
-          //* Round to two decimal places
           percentComplete: Math.round(obj[0].percentComplete)
       })
+      console.log(`Objective Percent Complete: ${obj[0].percentComplete}`)
   } catch (err) {
       console.log(chalk.red.bold(err))
   }
 
 }
-
-//! Pre Removal of a Key Result, we need to recalculate the avg. progress by objective
 KeyResultSchema.post('save', function() {
   this.constructor.getAverageProgress(this.objective)
 
 })
 
-//! Pre Removal of a Key Result, we need to recalculate the avg. progress by objective
 KeyResultSchema.pre('remove', function() {
   this.constructor.getAverageProgress(this.objective)
 })
-
-
 
 KeyResultSchema.virtual('keyResults', {
   ref: 'objective',
