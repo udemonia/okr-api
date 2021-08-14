@@ -86,10 +86,6 @@ app.use(`/api/v1/objectives`, objectives);
 app.use(`/api/v1/keyresults`, keyResults);
 app.use(`/api/v1/auth`, authentication);
 
-// app.use(`/api/v1/courses`, courses);
-// app.use('/api/v1/auth', auth)
-
-
 //! Middleware ^ after the routes
 
 app.use(handleErrors);
@@ -98,12 +94,20 @@ app.use(handleErrors);
 const port = process.env.PORT || 2002
 
 
-const server = app.listen(port, () => {
-    console.log(`Listening in ${chalk.blueBright.bold( process.env.NODE_ENV )} environment on port ${chalk.bold.blueBright( port )}`)
-})
+//? With Supertest - we can't listen in app because it will start a server.... 
+//? Supertest env === test
+if (process.env.NODE_ENV != 'test') {
+    const server = app.listen(port, () => {
+        console.log(`Listening in ${chalk.blueBright.bold( process.env.NODE_ENV )} environment on port ${chalk.bold.blueBright( port )}`)
+    })
+    
+    // handle unhandled promise rejection
+    process.on('unhandledRejection', (err, promise) => {
+        console.log(chalk.red.bold(` Error: Unhandled Rejection Warning ${err}`))
+        server.close(() => process.exit(1)) // 1 = failure
+    })
+}
 
-// handle unhandled promise rejection
-process.on('unhandledRejection', (err, promise) => {
-    console.log(chalk.red.bold(` Error: Unhandled Rejection Warning ${err}`))
-    server.close(() => process.exit(1)) // 1 = failure
-})
+
+
+module.exports = app

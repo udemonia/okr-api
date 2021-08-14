@@ -13,7 +13,7 @@ exports.loginRequiredRoutes = async (req,res,next) => {
 
     //* fail fast -> no auth headers should return a failed call right away
     if (!requestAuthHeader) {
-        return next(new ErrorResponse('Not Authorized', 404))
+        return next(new ErrorResponse('Not Authorized', 401))
     }
 
     //* lets check to see if the Authorization header value starts with Bearer
@@ -43,7 +43,7 @@ exports.loginRequiredRoutes = async (req,res,next) => {
         //* 3. options - we're not passing any here
         const decodedJSONWebToken = jwt.verify(bearerAccessToken, process.env.JWT_SECRET)
 
-        console.log(chalk.green.inverse.bold(JSON.stringify(decodedJSONWebToken, null, 2)))
+        // console.log(chalk.green.inverse.bold(JSON.stringify(decodedJSONWebToken, null, 2)))
 
         //* pull out the User.id and search for it in Mongo
         //* we'll store the User in the request object
