@@ -13,6 +13,10 @@
   "keywords": [
     "okr"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udemonia/okr-api"
+  },
   "author": "Brandon Lambert",
   "license": "ISC",
   "dependencies": {

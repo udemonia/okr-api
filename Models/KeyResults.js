@@ -34,6 +34,14 @@ const KeyResultSchema = new mongoose.Schema({
           type: Number,
           default: 0
         },
+        currentValue: {
+          type: Number,
+          default: 0
+        },
+        targetValue: {
+          type: Number,
+          default: 0
+        },
         tasks: [{
           name: String,
           completed: {
@@ -52,6 +60,12 @@ KeyResultSchema.pre('save', function(next) {
   this.slug = slugify(this.name, {
     lower: true,
   })
+  next()
+})
+
+
+KeyResultSchema.pre('save', function(next) {
+  this.progress = (this.currentValue / this.targetValue) * 100
   next()
 })
 
