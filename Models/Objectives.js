@@ -21,6 +21,14 @@ const ObjectiveSchema = new mongoose.Schema({
           type: Boolean,
           default: false
         },
+        objectiveStartDate: {
+          type: Date,
+          default: Date.now
+        },
+        objectiveEndDate: {
+          type: Date,
+          default: Date.now
+        },
         percentComplete: {
           type: Number,
           default: 0
