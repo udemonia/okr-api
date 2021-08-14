@@ -63,7 +63,7 @@ KeyResultSchema.pre('save', function(next) {
   next()
 })
 
-
+//? We need to calculate % complete 'Progress' on the key Result dynamically based upon the current and target values
 KeyResultSchema.pre('save', function(next) {
   this.progress = (this.currentValue / this.targetValue) * 100
   next()
