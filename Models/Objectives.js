@@ -21,6 +21,10 @@ const ObjectiveSchema = new mongoose.Schema({
           type: Boolean,
           default: false
         },
+        percentComplete: {
+          type: Number,
+          default: 0
+        },
         user: {
           type: mongoose.Schema.ObjectId,
           ref: 'User',
@@ -32,6 +36,9 @@ const ObjectiveSchema = new mongoose.Schema({
         toObject: { virtuals: true }
       }
 )
+
+//? We need to get the percent complete - which should be an aggregate of all key results progress / count of key results
+//* Calculate the Avg. progress of all key results in an objective and save it as this.percentComplete
 
 
 // cascading delete - if we delete the objective - we should delete the 
@@ -50,16 +57,5 @@ ObjectiveSchema.pre('save', function(next) {
     next()
   })
 
-// reverse populate on the objective schema
-// we're pulling in a virtual key Results array on the objective object
-// ObjectiveSchema.virtual('keyResults', {
-//   ref: 'KeyResults',
-//   localField: '_id',
-//   foreignField: 'objective',
-//   justOne: false
-// })
-
-// We are going to need virtuals
-// how the heck to we calculate percentages
 
 module.exports = mongoose.model('Objectives', ObjectiveSchema);

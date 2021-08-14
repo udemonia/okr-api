@@ -69,8 +69,84 @@ KeyResultSchema.pre('save', function(next) {
   next()
 })
 
-// We are going to need virtuals
-// how the heck to we calculate percentages
+//* not sure why this has to be on the key result and not the objective but....
+
+
+//* Lets create a static method to calculate the average progress
+// KeyResultSchema.statics.getAverageProgress = async (objectiveId) => {
+//   console.log('Calculating Average Progress.....')
+//   //? Create a Pipeline and handle the steps to the pipeline
+//   //? Match the objective on this model with whatever is passed in
+//   //? After Match
+//   //? Group - group together the objective id and avg progress as an obj
+//   const obj = await this.aggregate([
+//     {
+//       $match: { objective: objectiveId }
+//     },
+//     {
+//       $group: {
+//         _id: '$objective',
+//         percentComplete: { $avg: '$progress'}
+//       }
+//     }
+//   ])
+//   console.log(obj)
+// }
+
+// //! We get the objective id at save, so at post save we can access it.
+// KeyResultSchema.post('save', () => {
+//   this.constructor.getAverageProgress(this.objective)
+// })
+
+// //! We want to do the same before we remove
+// KeyResultSchema.pre('remove', () => {
+//   this.constructor.getAverageProgress(this.objective)
+// })
+
+
+// lets create a static method on the Mongoose Course Schema to calculate average cost
+KeyResultSchema.statics.getAverageProgress = async function(objectiveId) {
+
+  //? Create an object with Objective ID and Avg Progress of each Key Result to insert into Objective
+  //* Match all Key Results on Objective ID and Group on Obj ID and Avg. Progress
+  const obj = await this.aggregate([
+      {
+          $match: { objective: objectiveId }
+      },
+      {
+          $group: {
+              _id: '$objective',
+              percentComplete: { $avg: '$progress'}
+          }
+      }
+  ])
+  console.log(obj) //
+
+  //* Save the Obj Into the Objective Database
+
+  try {
+      await this.model('Objectives').findByIdAndUpdate(objectiveId, {
+          //* Round to two decimal places
+          percentComplete: Math.round(obj[0].percentComplete)
+      })
+  } catch (err) {
+      console.log(chalk.red.bold(err))
+  }
+
+}
+
+//! Pre Removal of a Key Result, we need to recalculate the avg. progress by objective
+KeyResultSchema.post('save', function() {
+  this.constructor.getAverageProgress(this.objective)
+
+})
+
+//! Pre Removal of a Key Result, we need to recalculate the avg. progress by objective
+KeyResultSchema.pre('remove', function() {
+  this.constructor.getAverageProgress(this.objective)
+})
+
+
 
 KeyResultSchema.virtual('keyResults', {
   ref: 'objective',
