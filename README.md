@@ -239,7 +239,7 @@ curl --location -g --request POST '{{url}}{{port}}/api/v1/objectives/60ddd4d0599
 }
 ```
 
-### Get Key Results for Objective
+### Get Key Results for an Objective
 
 > /api/v1/objectives/{{objective_id}}/keyresults
 
