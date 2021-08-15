@@ -123,7 +123,7 @@ curl --location -g --request POST '{{url}}{{port}}/api/v1/auth/login' \
 }'
 ```
 
-> Example Response
+Example Response
 
 ``` json
 {
@@ -197,7 +197,7 @@ curl --location --request DELETE 'http://localhost:2002/api/v1/objectives/{{reso
 
 ### Create a Single Key Result
 
-Key Results *belong* to an objective, this is handled by having a nested route
+Key Results ***belong*** to an objective, this is handled with nested routing
 
 >/api/v1/objectives/{{objective_id}}/keyresults
 
