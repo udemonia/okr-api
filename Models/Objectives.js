@@ -48,7 +48,6 @@ const ObjectiveSchema = new mongoose.Schema({
 //? We need to get the percent complete - which should be an aggregate of all key results progress / count of key results
 //* Calculate the Avg. progress of all key results in an objective and save it as this.percentComplete
 
-
 // cascading delete - if we delete the objective - we should delete the 
 ObjectiveSchema.pre('remove', async function(next) {
   console.log(`courses being removed from objective: ${this._id}`)
@@ -64,6 +63,4 @@ ObjectiveSchema.pre('save', function(next) {
     })
     next()
   })
-
-
 module.exports = mongoose.model('Objectives', ObjectiveSchema);

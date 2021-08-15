@@ -69,45 +69,9 @@ KeyResultSchema.pre('save', function(next) {
   next()
 })
 
-//* not sure why this has to be on the key result and not the objective but....
-
-
-//* Lets create a static method to calculate the average progress
-// KeyResultSchema.statics.getAverageProgress = async (objectiveId) => {
-//   console.log('Calculating Average Progress.....')
-//   //? Create a Pipeline and handle the steps to the pipeline
-//   //? Match the objective on this model with whatever is passed in
-//   //? After Match
-//   //? Group - group together the objective id and avg progress as an obj
-//   const obj = await this.aggregate([
-//     {
-//       $match: { objective: objectiveId }
-//     },
-//     {
-//       $group: {
-//         _id: '$objective',
-//         percentComplete: { $avg: '$progress'}
-//       }
-//     }
-//   ])
-//   console.log(obj)
-// }
-
-// //! We get the objective id at save, so at post save we can access it.
-// KeyResultSchema.post('save', () => {
-//   this.constructor.getAverageProgress(this.objective)
-// })
-
-// //! We want to do the same before we remove
-// KeyResultSchema.pre('remove', () => {
-//   this.constructor.getAverageProgress(this.objective)
-// })
-
-
 // todo how to handle no key results
 
-
-// lets create a static method on the Mongoose Course Schema to calculate average cost
+//* lets create a static method on the Mongoose Course Schema to calculate average cost
 KeyResultSchema.statics.getAverageProgress = async function(objectiveId) {
   const obj = await this.aggregate([
       {
