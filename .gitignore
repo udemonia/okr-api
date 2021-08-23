@@ -273,3 +273,17 @@ package-lock.json
 
 # Android memory profiler files
 *.hprof
+
+node_modules/
+.expo/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# macOS
+.DS_Store

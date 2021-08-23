@@ -20,7 +20,7 @@ const router = express.Router({ mergeParams: true })
 router.route('/')
     .get(loginRequiredRoutes, advancedResults(KeyResults, {
         path: 'objective',
-        select: 'name description '
+        select: 'name description atRisk percentComplete description objectiveStartDate objectiveEndDate '
     }), getKeyResults)
     .post(loginRequiredRoutes, addKeyResult)
 

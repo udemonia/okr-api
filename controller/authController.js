@@ -11,6 +11,7 @@ const path = require('path') // for the file extension on image upload
 exports.registerUser = async (req,res,next) => {
     //* de-structure req.body to grab name, email, password, role
     const { name, email, password, role } = req.body;
+    console.log(req.body)
 
     //* create a User in the Mongo table - 
     //* password will be handled via mongoose pre-save function,
@@ -40,6 +41,8 @@ exports.logUserIn = async (req,res,next) => {
 
     //* 1. get email + password from req.body
     const {email, password} = req.body
+
+    console.log(req.body)
 
     //* 2. quick validation on email + password
     if (!password || !email) {
